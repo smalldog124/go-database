@@ -7,7 +7,7 @@
 
 3.สร้าง table ชื่อ testsck
 
-## import package ใน github
+## import package ของ github
 ``
 go get https://github.com/go-sql-driver/mysql
 ``
