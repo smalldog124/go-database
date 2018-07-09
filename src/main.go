@@ -29,6 +29,7 @@ func main() {
 	} else {
 		fmt.Println("connect success")
 	}
+	fmt.Println(addUser(db))
 	fmt.Println(getUser(db))
 
 }
@@ -58,4 +59,19 @@ func getUser(db *sql.DB) []Usersdata {
 		userDataList = append(userDataList, user)
 	}
 	return userDataList
+}
+
+func addUser(db *sql.DB) bool {
+	statement, _ := db.Prepare(`INSERT INTO testsck.user (citizen_id, firstname, lastname,
+			birthyear, firstname_father, lastname_father,
+			firstname_mother, lastname_mother, soldier_id, address_id
+		)VALUES (?,?,?,?,?,?,?,?,?,?)`)
+
+	_, err := statement.Exec("5537478625189", "ผักกาด", "เล็ปขบ", 2538, "นนัย", "เล็ปขบ", "ออย", "เล็ปขบ", "449", "1")
+
+	if err != nil {
+		panic(err.Error())
+		return false
+	}
+	return true
 }
