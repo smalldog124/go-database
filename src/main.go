@@ -23,16 +23,19 @@ type Usersdata struct {
 
 func main() {
 	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/testsck")
+	defer db.Close()
 	if err != nil {
 		fmt.Println("connect fail")
 	} else {
 		fmt.Println("connect success")
 	}
+	fmt.Println(getUser(db))
 
-	defer db.Close()
+}
 
+func getUser(db *sql.DB) []Usersdata {
 	result, _ := db.Query("SELECT * FROM testsck.user")
-
+	var userDataList []Usersdata
 	for result.Next() {
 		var user Usersdata
 		err := result.Scan(
@@ -52,7 +55,7 @@ func main() {
 		if err != nil {
 			panic(err.Error())
 		}
-
-		fmt.Println(user)
+		userDataList = append(userDataList, user)
 	}
+	return userDataList
 }
